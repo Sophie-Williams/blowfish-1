@@ -152,8 +152,8 @@ static u32 bf_f(bf_context *bf, u32 x) {
 	u32 a = (x & 0xFF);
 
 	u32 y = bf->s[0][a] + bf->s[1][b];
-	y = y ^ bf->s[2][c];
-	y = y + bf->s[3][d];
+	y ^= bf->s[2][c];
+	y += bf->s[3][d];
 	return y;
 }
 
@@ -162,8 +162,8 @@ static void bf_encrypt_64bits(bf_context *bf, u32 *lhs_, u32 *rhs_) {
 	u32 rhs = *rhs_;
 
 	for (u32 i = 0; i < 16; ++i) {
-		lhs = lhs ^ bf->p[i];
-		rhs = bf_f(bf, lhs) ^ rhs;
+		lhs ^= bf->p[i];
+		rhs ^= bf_f(bf, lhs);
 
 		u32 tmp = lhs;
 		lhs = rhs;
@@ -174,8 +174,8 @@ static void bf_encrypt_64bits(bf_context *bf, u32 *lhs_, u32 *rhs_) {
 	lhs = rhs;
 	rhs = tmp;
 
-	rhs = rhs ^ bf->p[16];
-	lhs = lhs ^ bf->p[17];
+	rhs ^= bf->p[16];
+	lhs ^= bf->p[17];
 
 	*lhs_ = lhs;
 	*rhs_ = rhs;
@@ -186,8 +186,8 @@ static void bf_decrypt_64bits(bf_context *bf, u32 *lhs_, u32 *rhs_) {
 	u32 rhs = *rhs_;
 
 	for (u32 i = 17; i > 1; --i) {
-		lhs = lhs ^ bf->p[i];
-		rhs = bf_f(bf, lhs) ^ rhs;
+		lhs ^= bf->p[i];
+		rhs ^= bf_f(bf, lhs);
 
 		u32 tmp = lhs;
 		lhs = rhs;
@@ -198,8 +198,8 @@ static void bf_decrypt_64bits(bf_context *bf, u32 *lhs_, u32 *rhs_) {
 	lhs = rhs;
 	rhs = tmp;
 
-	rhs = rhs ^ bf->p[1];
-	lhs = lhs ^ bf->p[0];
+	rhs ^= bf->p[1];
+	lhs ^= bf->p[0];
 
 	*lhs_ = lhs;
 	*rhs_ = rhs;
