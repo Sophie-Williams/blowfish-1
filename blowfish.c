@@ -249,7 +249,6 @@ void bf_encrypt(bf_context *bf, byte *data, size_t len) {
 		data[i + 2] = (lhs >> 16);
 		data[i + 1] = (lhs >> 8);
 		data[i + 0] = (lhs);
-
 		data[i + 7] = (rhs >> 24);
 		data[i + 6] = (rhs >> 16);
 		data[i + 5] = (rhs >> 8);
@@ -269,7 +268,6 @@ void bf_decrypt(bf_context *bf, byte *data, size_t len) {
 		data[i + 2] = (lhs >> 16);
 		data[i + 1] = (lhs >> 8);
 		data[i + 0] = (lhs);
-
 		data[i + 7] = (rhs >> 24);
 		data[i + 6] = (rhs >> 16);
 		data[i + 5] = (rhs >> 8);
