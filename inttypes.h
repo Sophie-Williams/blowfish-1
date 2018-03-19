@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __INTTYPES_H__
+#define __INTTYPES_H__
+
 #include <stdint.h>
 
 typedef int8_t   i8;
@@ -15,3 +17,5 @@ typedef uint8_t  byte;
 
 typedef float    f32;
 typedef double   f64;
+
+#endif // __INTTYPES_H__
