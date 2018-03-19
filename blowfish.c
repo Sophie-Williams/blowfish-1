@@ -241,18 +241,19 @@ void bf_encrypt(bf_context *bf, byte *data, size_t len) {
 	assert(!(len % 8));
 
 	for (u32 i = 0; i < len; i += 8) {
-		u32 lhs = (data[i + 0] << 24) | (data[i + 1] << 16) | (data[i + 2] << 8) | data[i + 3];
-		u32 rhs = (data[i + 4] << 24) | (data[i + 5] << 16) | (data[i + 6] << 8) | data[i + 7];
+		u32 lhs = (data[i + 3] << 24) | (data[i + 2] << 16) | (data[i + 1] << 8) | data[i + 0];
+		u32 rhs = (data[i + 7] << 24) | (data[i + 6] << 16) | (data[i + 5] << 8) | data[i + 4];
 		bf_encrypt_64bits(bf, &lhs, &rhs);
 
-		data[i + 0] = (lhs >> 24);
-		data[i + 1] = (lhs >> 16);
-		data[i + 2] = (lhs >> 8);
-		data[i + 3] = (lhs);
-		data[i + 4] = (rhs >> 24);
-		data[i + 5] = (rhs >> 16);
-		data[i + 6] = (rhs >> 8);
-		data[i + 7] = (rhs);
+		data[i + 3] = (lhs >> 24);
+		data[i + 2] = (lhs >> 16);
+		data[i + 1] = (lhs >> 8);
+		data[i + 0] = (lhs);
+
+		data[i + 7] = (rhs >> 24);
+		data[i + 6] = (rhs >> 16);
+		data[i + 5] = (rhs >> 8);
+		data[i + 4] = (rhs);
 	}
 }
 
@@ -260,17 +261,18 @@ void bf_decrypt(bf_context *bf, byte *data, size_t len) {
 	assert(!(len % 8));
 
 	for (u32 i = 0; i < len; i += 8) {
-		u32 lhs = (data[i + 0] << 24) | (data[i + 1] << 16) | (data[i + 2] << 8) | data[i + 3];
-		u32 rhs = (data[i + 4] << 24) | (data[i + 5] << 16) | (data[i + 6] << 8) | data[i + 7];
+		u32 lhs = (data[i + 3] << 24) | (data[i + 2] << 16) | (data[i + 1] << 8) | data[i + 0];
+		u32 rhs = (data[i + 7] << 24) | (data[i + 6] << 16) | (data[i + 5] << 8) | data[i + 4];
 		bf_decrypt_64bits(bf, &lhs, &rhs);
 
-		data[i + 0] = (lhs >> 24);
-		data[i + 1] = (lhs >> 16);
-		data[i + 2] = (lhs >> 8);
-		data[i + 3] = (lhs);
-		data[i + 4] = (rhs >> 24);
-		data[i + 5] = (rhs >> 16);
-		data[i + 6] = (rhs >> 8);
-		data[i + 7] = (rhs);
+		data[i + 3] = (lhs >> 24);
+		data[i + 2] = (lhs >> 16);
+		data[i + 1] = (lhs >> 8);
+		data[i + 0] = (lhs);
+
+		data[i + 7] = (rhs >> 24);
+		data[i + 6] = (rhs >> 16);
+		data[i + 5] = (rhs >> 8);
+		data[i + 4] = (rhs);
 	}
 }
